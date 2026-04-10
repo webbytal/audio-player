@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Joe Tal's Bridge Helper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
     --felt: #1a5c3a;
@@ -15,7 +15,6 @@
     --gold: #c9a84c;
     --gold-light: #e4c870;
     --cream: #f5f0e1;
-    --dark: #0c1a12;
     --red-suit: #c0392b;
     --card-bg: rgba(255, 255, 255, 0.06);
     --card-border: rgba(201, 168, 76, 0.25);
@@ -23,190 +22,95 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
 
   body {
     font-family: 'Inter', sans-serif;
     background: radial-gradient(ellipse at top, var(--felt) 0%, var(--felt-dark) 45%, var(--felt-deep) 100%);
     color: var(--cream);
-    min-height: 100vh;
-    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
   }
 
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+  .top-bar {
+    flex: 0 0 auto;
+    padding: 10px 18px;
     background: rgba(9, 32, 21, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--card-border);
-  }
-
-  .nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--cream);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-suits {
-    font-size: 18px;
-    letter-spacing: 2px;
-  }
-
-  .logo-suits .red { color: var(--red-suit); }
-  .logo-suits .black { color: var(--cream); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--cream);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    opacity: 0.8;
-    transition: opacity 0.2s, color 0.2s;
-  }
-
-  .nav-links a:hover { opacity: 1; color: var(--gold-light); }
-
-  .hero {
-    padding: 140px 28px 60px;
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .hero-suits {
-    font-size: 32px;
-    letter-spacing: 12px;
-    margin-bottom: 24px;
-    opacity: 0.9;
-  }
-
-  .hero-suits .red { color: var(--red-suit); }
-  .hero-suits .black { color: var(--cream); }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 6vw, 64px);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 18px;
-    background: linear-gradient(135deg, var(--cream) 0%, var(--gold-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero .tagline {
-    font-size: 18px;
-    opacity: 0.8;
-    font-style: italic;
-    max-width: 580px;
-    margin: 0 auto;
-  }
-
-  .player-section {
-    padding: 40px 20px 60px;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .player-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 32px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  }
-
-  .player-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-
-  .player-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 24px;
-    min-height: 40px;
-  }
-
-  .visualizer {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 3px;
-    height: 70px;
-    margin-bottom: 24px;
-  }
-
-  .bar {
-    width: 4px;
-    background: linear-gradient(to top, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius: 2px;
-    height: 10px;
-    transition: height 0.08s ease;
-  }
-
-  .controls {
     display: flex;
     align-items: center;
     gap: 18px;
   }
 
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .brand-suits { font-size: 13px; letter-spacing: 2px; }
+  .brand-suits .red { color: var(--red-suit); }
+  .brand-suits .black { color: var(--cream); }
+
+  .player {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
   .play-btn {
-    width: 58px;
-    height: 58px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     border: none;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
     color: var(--felt-deep);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 8px 24px rgba(201, 168, 76, 0.35);
     transition: transform 0.15s;
+    box-shadow: 0 4px 12px rgba(201, 168, 76, 0.3);
   }
 
-  .play-btn:hover:not(:disabled) { transform: scale(1.05); }
-  .play-btn:active:not(:disabled) { transform: scale(0.96); }
-  .play-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .play-btn:hover:not(:disabled) { transform: scale(1.08); }
+  .play-btn:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+  .play-btn svg { width: 14px; height: 14px; }
 
-  .play-btn svg { width: 22px; height: 22px; }
+  .player-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
-  .progress-wrap { flex: 1; }
+  .player-title {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.9;
+  }
 
   .progress-bar {
-    height: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
     cursor: pointer;
     overflow: hidden;
   }
@@ -214,229 +118,170 @@
   .progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
     transition: width 0.1s linear;
   }
 
   .time {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
+    font-size: 11px;
     opacity: 0.6;
-    margin-top: 8px;
+    flex-shrink: 0;
     font-variant-numeric: tabular-nums;
+    min-width: 72px;
+    text-align: right;
   }
 
-  .terms-section {
-    padding: 20px 20px 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-
-  .section-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 34px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .section-header p {
-    opacity: 0.7;
-    font-size: 15px;
+  .grid-wrap {
+    flex: 1 1 auto;
+    padding: 14px;
+    min-height: 0;
+    display: flex;
   }
 
   .terms-grid {
+    flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    min-height: 0;
   }
 
   .term-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 22px 18px;
+    border-radius: 10px;
     cursor: pointer;
-    text-align: center;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-    font-family: 'Playfair Display', serif;
-    font-size: 19px;
-    font-weight: 600;
-    color: var(--cream);
-    backdrop-filter: blur(4px);
-    min-height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .term-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.25s;
+    text-align: center;
+    padding: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 1.5vw, 20px);
+    font-weight: 700;
+    color: var(--cream);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.15;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .term-card:hover {
-    transform: translateY(-3px);
     border-color: var(--gold);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    background: rgba(201, 168, 76, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
   }
 
-  .term-card:hover::before { opacity: 1; }
+  .term-card:active { transform: translateY(0); }
 
   .term-card.active {
-    background: linear-gradient(135deg, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.28), rgba(201, 168, 76, 0.1));
     border-color: var(--gold);
-    box-shadow: 0 0 0 2px var(--gold), 0 12px 30px rgba(201, 168, 76, 0.3);
+    box-shadow: 0 0 0 2px var(--gold), 0 6px 18px rgba(201, 168, 76, 0.25);
   }
 
   .term-card .suit {
     position: absolute;
-    top: 8px;
-    right: 10px;
-    font-size: 12px;
+    top: 6px;
+    right: 8px;
+    font-size: 10px;
     opacity: 0.45;
   }
 
   .term-card .suit.red { color: var(--red-suit); }
 
-  footer {
-    padding: 40px 20px 30px;
-    text-align: center;
-    border-top: 1px solid var(--card-border);
-    background: rgba(9, 32, 21, 0.5);
+  @media (max-width: 760px) {
+    .top-bar {
+      padding: 8px 12px;
+      gap: 10px;
+    }
+    .brand { font-size: 14px; }
+    .brand-suits { display: none; }
+    .player-title { font-size: 12px; }
+    .time { display: none; }
+    .terms-grid {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .grid-wrap { padding: 10px; }
+    .term-card {
+      font-size: clamp(11px, 3.2vw, 16px);
+      padding: 6px 4px;
+      border-radius: 8px;
+      line-height: 1.1;
+    }
+    .term-card .suit { font-size: 9px; top: 4px; right: 5px; }
   }
 
-  .footer-suits {
-    font-size: 22px;
-    letter-spacing: 10px;
-    margin-bottom: 14px;
-    opacity: 0.7;
+  @media (max-width: 380px) {
+    .brand { display: none; }
+    .top-bar { gap: 8px; }
   }
 
-  .footer-suits .red { color: var(--red-suit); }
-
-  footer p {
-    font-size: 13px;
-    opacity: 0.6;
-  }
-
-  @media (max-width: 640px) {
-    .nav { padding: 16px 20px; }
-    .nav-links { gap: 20px; }
-    .nav-links a { font-size: 13px; }
-    .hero { padding: 120px 20px 40px; }
-    .player-card { padding: 24px; }
-    .player-title { font-size: 22px; }
-    .terms-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-    .term-card { font-size: 16px; padding: 18px 14px; min-height: 78px; }
+  @media (max-height: 480px) and (orientation: landscape) {
+    .terms-grid {
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+    }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <nav class="nav">
-    <div class="logo">
-      <span class="logo-suits"><span class="black">&spades;</span><span class="red">&hearts;</span><span class="red">&diams;</span><span class="black">&clubs;</span></span>
-      Joe Tal's Bridge Helper
+<div class="top-bar">
+  <div class="brand">
+    <span class="brand-suits"><span class="black">&spades;</span><span class="red">&hearts;</span><span class="red">&diams;</span><span class="black">&clubs;</span></span>
+    Joe Tal's Bridge Helper
+  </div>
+  <div class="player">
+    <button class="play-btn" id="play-btn" disabled aria-label="Play">
+      <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="player-info">
+      <div class="player-title" id="player-title">Tap a term below</div>
+      <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     </div>
-    <ul class="nav-links">
-      <li><a href="#player">Listen</a></li>
-      <li><a href="#terms">Terms</a></li>
-    </ul>
-  </nav>
-</header>
-
-<section class="hero">
-  <div class="hero-suits">
-    <span class="black">&spades;</span>
-    <span class="red">&hearts;</span>
-    <span class="red">&diams;</span>
-    <span class="black">&clubs;</span>
+    <div class="time"><span id="current-time">0:00</span> / <span id="duration">0:00</span></div>
   </div>
-  <h1>Joe Tal's Bridge Helper</h1>
-  <p class="tagline">40 years at the table. Every term tells a story. Tap any card below to hear Joe's guidance.</p>
-</section>
+</div>
 
-<section class="player-section" id="player">
-  <div class="player-card">
-    <div class="player-label">Now Playing</div>
-    <div class="player-title" id="player-title">Select a term below</div>
-    <div class="visualizer" id="visualizer"></div>
-    <div class="controls">
-      <button class="play-btn" id="play-btn" disabled aria-label="Play">
-        <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-      <div class="progress-wrap">
-        <div class="progress-bar" id="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
-        </div>
-        <div class="time">
-          <span id="current-time">0:00</span>
-          <span id="duration">0:00</span>
-        </div>
-      </div>
-    </div>
-    <audio id="audio" preload="metadata"></audio>
-  </div>
-</section>
-
-<section class="terms-section" id="terms">
-  <div class="section-header">
-    <h2>Bridge Terms</h2>
-    <p>Tap a term to hear Joe's commentary</p>
-  </div>
+<div class="grid-wrap">
   <div class="terms-grid" id="terms-grid"></div>
-</section>
+</div>
 
-<footer>
-  <div class="footer-suits">
-    <span class="black">&spades;</span>
-    <span class="red">&hearts;</span>
-    <span class="red">&diams;</span>
-    <span class="black">&clubs;</span>
-  </div>
-  <p>&copy; 2026 Joe Tal's Bridge Helper &middot; Crafted with care for Bridge students everywhere</p>
-</footer>
+<audio id="audio" preload="metadata"></audio>
 
 <script>
   const TERMS = [
-    { name: 'Bidding',       file: 'bidding.mp3',      suit: '\u2660', red: false },
-    { name: 'Opening Lead',  file: 'opening-lead.mp3', suit: '\u2665', red: true  },
-    { name: 'Dummy',         file: 'dummy.mp3',        suit: '\u2666', red: true  },
-    { name: 'Declarer',      file: 'declarer.mp3',     suit: '\u2663', red: false },
-    { name: 'Finesse',       file: 'finesse.mp3',      suit: '\u2660', red: false },
-    { name: 'Slam',          file: 'slam.mp3',         suit: '\u2665', red: true  },
-    { name: 'Trump',         file: 'trump.mp3',        suit: '\u2666', red: true  },
-    { name: 'No Trump',      file: 'no-trump.mp3',     suit: '\u2663', red: false },
-    { name: 'Hand Play',     file: 'hand-play.mp3',    suit: '\u2660', red: false },
-    { name: 'Defense',       file: 'defense.mp3',      suit: '\u2665', red: true  },
-    { name: 'Squeeze',       file: 'squeeze.mp3',      suit: '\u2666', red: true  },
-    { name: 'Endplay',       file: 'endplay.mp3',      suit: '\u2663', red: false },
-    { name: 'Ruff',          file: 'ruff.mp3',         suit: '\u2660', red: false },
-    { name: 'Overtrick',     file: 'overtrick.mp3',    suit: '\u2665', red: true  },
-    { name: 'Contract',      file: 'contract.mp3',     suit: '\u2666', red: true  },
-    { name: 'Vulnerability', file: 'vulnerability.mp3',suit: '\u2663', red: false },
-    { name: 'Convention',    file: 'convention.mp3',   suit: '\u2660', red: false },
-    { name: 'Double',        file: 'double.mp3',       suit: '\u2665', red: true  },
-    { name: 'Redouble',      file: 'redouble.mp3',     suit: '\u2666', red: true  },
-    { name: 'Rubber',        file: 'rubber.mp3',       suit: '\u2663', red: false }
+    { name: 'Bidding',       file: 'bidding.mp3',       suit: '\u2660', red: false },
+    { name: 'Opening Lead',  file: 'opening-lead.mp3',  suit: '\u2665', red: true  },
+    { name: 'Dummy',         file: 'dummy.mp3',         suit: '\u2666', red: true  },
+    { name: 'Declarer',      file: 'declarer.mp3',      suit: '\u2663', red: false },
+    { name: 'Finesse',       file: 'finesse.mp3',       suit: '\u2660', red: false },
+    { name: 'Slam',          file: 'slam.mp3',          suit: '\u2665', red: true  },
+    { name: 'Trump',         file: 'trump.mp3',         suit: '\u2666', red: true  },
+    { name: 'No Trump',      file: 'no-trump.mp3',      suit: '\u2663', red: false },
+    { name: 'Hand Play',     file: 'hand-play.mp3',     suit: '\u2660', red: false },
+    { name: 'Defense',       file: 'defense.mp3',       suit: '\u2665', red: true  },
+    { name: 'Squeeze',       file: 'squeeze.mp3',       suit: '\u2666', red: true  },
+    { name: 'Endplay',       file: 'endplay.mp3',       suit: '\u2663', red: false },
+    { name: 'Ruff',          file: 'ruff.mp3',          suit: '\u2660', red: false },
+    { name: 'Overtrick',     file: 'overtrick.mp3',     suit: '\u2665', red: true  },
+    { name: 'Contract',      file: 'contract.mp3',      suit: '\u2666', red: true  },
+    { name: 'Vulnerability', file: 'vulnerability.mp3', suit: '\u2663', red: false },
+    { name: 'Convention',    file: 'convention.mp3',    suit: '\u2660', red: false },
+    { name: 'Double',        file: 'double.mp3',        suit: '\u2665', red: true  },
+    { name: 'Redouble',      file: 'redouble.mp3',      suit: '\u2666', red: true  },
+    { name: 'Rubber',        file: 'rubber.mp3',        suit: '\u2663', red: false }
   ];
 
   const grid = document.getElementById('terms-grid');
-  TERMS.forEach((term, idx) => {
+  TERMS.forEach(function (term, idx) {
     const card = document.createElement('div');
     card.className = 'term-card';
     card.dataset.index = idx;
@@ -444,16 +289,6 @@
     card.addEventListener('click', function () { selectTerm(idx); });
     grid.appendChild(card);
   });
-
-  const visualizer = document.getElementById('visualizer');
-  const BAR_COUNT = 48;
-  const bars = [];
-  for (let i = 0; i < BAR_COUNT; i++) {
-    const bar = document.createElement('div');
-    bar.className = 'bar';
-    visualizer.appendChild(bar);
-    bars.push(bar);
-  }
 
   const audio = document.getElementById('audio');
   const playBtn = document.getElementById('play-btn');
@@ -467,34 +302,7 @@
   const PLAY_SVG = '<path d="M8 5v14l11-7z"/>';
   const PAUSE_SVG = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
 
-  let audioCtx, analyser, dataArray, source;
-  let animationId;
   let currentIndex = -1;
-
-  function initAudioContext() {
-    if (audioCtx) return;
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 128;
-    dataArray = new Uint8Array(analyser.frequencyBinCount);
-    source = audioCtx.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-  }
-
-  function animateVisualizer() {
-    if (!audio.paused && analyser) {
-      analyser.getByteFrequencyData(dataArray);
-      for (let i = 0; i < BAR_COUNT; i++) {
-        const v = dataArray[i % dataArray.length] || 0;
-        const h = Math.max(10, (v / 255) * 70);
-        bars[i].style.height = h + 'px';
-      }
-    } else {
-      bars.forEach(function (b) { b.style.height = '10px'; });
-    }
-    animationId = requestAnimationFrame(animateVisualizer);
-  }
 
   function formatTime(t) {
     if (!isFinite(t)) return '0:00';
@@ -515,16 +323,11 @@
     audio.src = 'audio/' + term.file;
     playBtn.disabled = false;
 
-    initAudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-
     audio.play().catch(function (err) { console.log('Play blocked:', err); });
   }
 
   playBtn.addEventListener('click', function () {
     if (currentIndex === -1) return;
-    initAudioContext();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
     if (audio.paused) audio.play();
     else audio.pause();
   });
@@ -532,7 +335,6 @@
   audio.addEventListener('play', function () {
     playIcon.innerHTML = PAUSE_SVG;
     playBtn.setAttribute('aria-label', 'Pause');
-    if (!animationId) animateVisualizer();
   });
 
   audio.addEventListener('pause', function () {
